@@ -13,6 +13,6 @@
  * @see Exception
  * @see Validator
  */
-class ValidationException extends Exception
+class WSDLGenerator_ValidationException extends Exception
 {
 }

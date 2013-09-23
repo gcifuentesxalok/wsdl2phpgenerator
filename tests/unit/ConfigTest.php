@@ -22,7 +22,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new Config('inputFile.xml', '/tmp/output', false, true, true, true, 'myNamespace', array('SOAP_SINGLE_ELEMENT_ARRAYS'), 'WSDL_CACHE_BOTH', 'SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP', 'test,test2, test3', 'prefix', 'suffix');
+        $this->object = new WSDLGenerator_Config('inputFile.xml', '/tmp/output', false, true, true, true, 'myNamespace', array('SOAP_SINGLE_ELEMENT_ARRAYS'), 'WSDL_CACHE_BOTH', 'SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP', 'test,test2, test3', 'prefix', 'suffix');
     }
 
     /**
@@ -121,10 +121,10 @@ class ConfigTest extends PHPUnit_Framework_TestCase
         $this->assertContains('test2', $this->object->getClassNamesArray());
         $this->assertContains('test3', $this->object->getClassNamesArray());
 
-        $this->object = new Config('', '');
+        $this->object = new WSDLGenerator_Config('', '');
         $this->assertEquals(0, count($this->object->getClassNamesArray()));
 
-        $this->object = new Config('inputFile.xml', '/tmp/output', false, true, true, true, 'myNamespace', array('SOAP_SINGLE_ELEMENT_ARRAYS'), 'WSDL_CACHE_BOTH', 'SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP', 'test');
+        $this->object = new WSDLGenerator_Config('inputFile.xml', '/tmp/output', false, true, true, true, 'myNamespace', array('SOAP_SINGLE_ELEMENT_ARRAYS'), 'WSDL_CACHE_BOTH', 'SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP', 'test');
         $this->assertContains('test', $this->object->getClassNamesArray());
     }
 

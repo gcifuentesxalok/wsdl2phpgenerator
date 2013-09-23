@@ -21,7 +21,7 @@ require_once dirname(__FILE__) . '/Validator.php';
  * @author Fredrik Wallgren <fredrik.wallgren@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
-abstract class Type
+abstract class WSDLGenerator_Type
 {
     /**
      *
@@ -59,14 +59,14 @@ abstract class Type
         $this->datatype = $datatype;
         $this->identifier = $name;
 
-        $config = Generator::getInstance()->getConfig();
+        $config = WSDLGenerator_Generator::getInstance()->getConfig();
 
         // Add prefix and suffix
         $name = $config->getPrefix() . $this->identifier . $config->getSuffix();
 
         try {
-            $name = Validator::validateClass($name);
-        } catch (ValidationException $e) {
+            $name = WSDLGenerator_Validator::validateClass($name);
+        } catch (WSDLGenerator_ValidationException $e) {
             $name .= 'Custom';
         }
 

@@ -16,7 +16,7 @@ require_once dirname(__FILE__) . '/Type.php';
  * @author Fredrik Wallgren <fredrik.wallgren@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
-class Enum extends Type
+class WSDLGenerator_Enum extends WSDLGenerator_Type
 {
     /**
      *
@@ -46,7 +46,7 @@ class Enum extends Type
             throw new Exception("The class has already been generated");
         }
 
-        $config = Generator::getInstance()->getConfig();
+        $config = WSDLGenerator_Generator::getInstance()->getConfig();
 
         $this->class = new PhpClass($this->phpIdentifier, $config->getClassExists());
 
@@ -54,13 +54,13 @@ class Enum extends Type
 
         foreach ($this->values as $value) {
             try {
-                $name = Validator::validateNamingConvention($value);
-            } catch (ValidationException $e) {
+                $name = WSDLGenerator_Validator::validateNamingConvention($value);
+            } catch (WSDLGenerator_ValidationException $e) {
                 $name = 'constant' . $name;
             }
             try {
-                $name = Validator::validateType($name);
-            } catch (ValidationException $e) {
+                $name = WSDLGenerator_Validator::validateType($name);
+            } catch (WSDLGenerator_ValidationException $e) {
                 $name .= 'Custom';
             }
 

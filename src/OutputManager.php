@@ -16,7 +16,7 @@ require_once dirname(__FILE__) . '/../lib/phpSource/PhpFile.php';
  * @author Fredrik Wallgren <fredrik.wallgren@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
-class OutputManager
+class WSDLGenerator_OutputManager
 {
     /**
      *
@@ -38,7 +38,7 @@ class OutputManager
 
     /**
      *
-     * @var Config A reference to the config
+     * @var WSDLGenerator_Config A reference to the config
      */
     private $config;
 
@@ -50,9 +50,9 @@ class OutputManager
 
     /**
      *
-     * @param Config $config The config to use
+     * @param WSDLGenerator_Config $config The config to use
      */
-    public function __construct(Config $config)
+    public function __construct(WSDLGenerator_Config $config)
     {
         $this->config = $config;
         $this->dir = '';

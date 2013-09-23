@@ -26,7 +26,7 @@ require_once dirname(__FILE__) . '/../lib/phpSource/PhpFile.php';
  * @author Fredrik Wallgren <fredrik.wallgren@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
-class Generator
+class WSDLGenerator_Generator
 {
 
     /**
@@ -51,7 +51,7 @@ class Generator
     /**
      *
      *
-     * @var Service The service class
+     * @var WSDLGenerator_Service The service class
      */
     private $service;
 
@@ -66,20 +66,20 @@ class Generator
     /**
      * This is the object that holds the current config
      *
-     * @var Config
+     * @var WSDLGenerator_Config
      * @access private
      */
     private $config;
 
     /**
      *
-     * @var DocumentationManager A manager for the documentation
+     * @var WSDLGenerator_DocumentationManager A manager for the documentation
      */
     private $documentation;
 
     /**
      *
-     * @var Generator The infamous singleton instance
+     * @var WSDLGenerator_Generator The infamous singleton instance
      */
     private static $instance = null;
 
@@ -97,7 +97,7 @@ class Generator
         $this->types = array();
         $this->enums = array();
         $this->simple = array();
-        $this->documentation = new DocumentationManager();
+        $this->documentation = new WSDLGenerator_DocumentationManager();
         // default to gettext, even if its unavailable (will lead to runtime exception if not and not injected)
         $this->displayCallback = (function_exists('gettext') ? 'gettext' : null);
     }
@@ -108,7 +108,7 @@ class Generator
     public static function instance()
     {
         if (self::$instance === null) {
-            self::$instance = new Generator();
+            self::$instance = new WSDLGenerator_Generator();
         }
 
         return self::$instance;
@@ -140,10 +140,10 @@ class Generator
      * Generates php source code from a wsdl file
      *
      * @see Config
-     * @param Config $config The config to use for generation
+     * @param WSDLGenerator_Config $config The config to use for generation
      * @access public
      */
-    public function generate(Config $config)
+    public function generate(WSDLGenerator_Config $config)
     {
         $this->config = $config;
 
@@ -223,7 +223,7 @@ class Generator
 
         $this->log($this->display('Starting to load service ') . $name);
 
-        $this->service = new Service($name, $this->types, $this->documentation->getServiceDescription());
+        $this->service = new WSDLGenerator_Service($name, $this->types, $this->documentation->getServiceDescription());
 
         $functions = $this->client->__getFunctions();
         foreach ($functions as $function) {
@@ -277,7 +277,7 @@ class Generator
             $numParts = count($parts);
             // ComplexType
             if ($numParts > 1) {
-                $type = new ComplexType($className);
+                $type = new WSDLGenerator_ComplexType($className);
                 $this->log($this->display('Loading type ') . $type->getPhpIdentifier());
 
                 for ($i = 1; $i < $numParts - 1; $i++) {
@@ -308,13 +308,13 @@ class Generator
                     $enumerationList = $typenode->getElementsByTagName('enumeration');
                     $patternList = $typenode->getElementsByTagName('pattern');
                     if ($enumerationList->length > 0) {
-                        $type = new Enum($className, $restriction);
+                        $type = new WSDLGenerator_Enum($className, $restriction);
                         $this->log($this->display('Loading enum ') . $type->getPhpIdentifier());
                         foreach ($enumerationList as $enum) {
                             $type->addValue($enum->attributes->getNamedItem('value')->nodeValue);
                         }
                     } elseif ($patternList->length > 0) { // If pattern
-                        $type = new Pattern($className, $restriction);
+                        $type = new WSDLGenerator_Pattern($className, $restriction);
                         $this->log($this->display('Loading pattern ') . $type->getPhpIdentifier());
                         $type->setValue($patternList->item(0)->attributes->getNamedItem('value')->nodeValue);
                     } else {
@@ -382,7 +382,7 @@ class Generator
             throw new Exception('No service loaded');
         }
 
-        $output = new OutputManager($this->config);
+        $output = new WSDLGenerator_OutputManager($this->config);
 
         // Generate all type classes
         $types = array();
@@ -416,7 +416,7 @@ class Generator
      * Returns the singleton of the generator class. This may be changed to a "better" solution but I don't know any of the top of my head
      * Used by different classes to get the loaded config
      *
-     * @return Generator The dreaded singleton instance
+     * @return WSDLGenerator_Generator The dreaded singleton instance
      */
     public static function getInstance()
     {
@@ -426,7 +426,7 @@ class Generator
     /**
      * Returns the loaded config
      *
-     * @return Config The loaded config
+     * @return WSDLGenerator_Config The loaded config
      */
     public function getConfig()
     {

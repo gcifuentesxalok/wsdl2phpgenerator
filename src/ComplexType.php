@@ -21,7 +21,7 @@ require_once dirname(__FILE__) . '/Variable.php';
  * @author Fredrik Wallgren <fredrik.wallgren@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
-class ComplexType extends Type
+class WSDLGenerator_ComplexType extends WSDLGenerator_Type
 {
     /**
      *
@@ -51,7 +51,7 @@ class ComplexType extends Type
             throw new Exception("The class has already been generated");
         }
 
-        $config = Generator::getInstance()->getConfig();
+        $config = WSDLGenerator_Generator::getInstance()->getConfig();
 
         $class = new PhpClass($this->phpIdentifier, $config->getClassExists());
 
@@ -66,12 +66,12 @@ class ComplexType extends Type
             $type = '';
 
             try {
-                $type = Validator::validateType($member->getType());
-            } catch (ValidationException $e) {
+                $type = WSDLGenerator_Validator::validateType($member->getType());
+            } catch (WSDLGenerator_ValidationException $e) {
                 $type .= 'Custom';
             }
 
-            $name = Validator::validateNamingConvention($member->getName());
+            $name = WSDLGenerator_Validator::validateNamingConvention($member->getName());
             $comment = new PhpDocComment();
             $comment->setVar(PhpDocElementFactory::getVar($type, $name, ''));
             $comment->setAccess(PhpDocElementFactory::getPublicAccess());
@@ -124,6 +124,6 @@ class ComplexType extends Type
      */
     public function addMember($type, $name, $nillable)
     {
-        $this->members[$name] = new Variable($type, $name, $nillable);
+        $this->members[$name] = new WSDLGenerator_Variable($type, $name, $nillable);
     }
 }

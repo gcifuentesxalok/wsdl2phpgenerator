@@ -38,16 +38,16 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
      */
     public function testValidateClass()
     {
-        $this->assertEquals('foo', Validator::validateClass('foo'));
-        $this->assertEquals('foobar', Validator::validateClass('foo-bar'));
-        $this->assertEquals('Foo', Validator::validateClass('Foo'));
-        $this->assertEquals('foo523', Validator::validateClass('foo523'));
+        $this->assertEquals('foo', WSDLGenerator_Validator::validateClass('foo'));
+        $this->assertEquals('foobar', WSDLGenerator_Validator::validateClass('foo-bar'));
+        $this->assertEquals('Foo', WSDLGenerator_Validator::validateClass('Foo'));
+        $this->assertEquals('foo523', WSDLGenerator_Validator::validateClass('foo523'));
 
         $this->setExpectedException('ValidationException');
-        Validator::validateClass('SoapClient');
+        WSDLGenerator_Validator::validateClass('SoapClient');
 
         $this->setExpectedException('ValidationException');
-        $this->assertEquals('for', Validator::validateClass('for')); // for is reserved keyword
+        $this->assertEquals('for', WSDLGenerator_Validator::validateClass('for')); // for is reserved keyword
     }
 
     /**
@@ -56,8 +56,8 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
     public function testValidateClassReservedKeyword()
     {
         $this->setExpectedException('ValidationException');
-        $this->assertEquals('for', Validator::validateClass('for')); // for is reserved keyword
-        $this->assertEquals('List', Validator::validateClass('List')); // for is reserved keyword
+        $this->assertEquals('for', WSDLGenerator_Validator::validateClass('for')); // for is reserved keyword
+        $this->assertEquals('List', WSDLGenerator_Validator::validateClass('List')); // for is reserved keyword
     }
 
     /**
@@ -66,7 +66,7 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
     public function testValidateClassReservedKeyword2()
     {
         $this->setExpectedException('ValidationException');
-        $this->assertEquals('List', Validator::validateClass('List')); // list is reserved keyword. PHP is not case sensitive in keywords
+        $this->assertEquals('List', WSDLGenerator_Validator::validateClass('List')); // list is reserved keyword. PHP is not case sensitive in keywords
     }
 
     /**
@@ -74,23 +74,23 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
      */
     public function testValidateType()
     {
-        $this->assertEquals('foo', Validator::validateType('foo'));
-        $this->assertEquals('foobar', Validator::validateType('foo-bar'));
-        $this->assertEquals('Foo', Validator::validateType('Foo'));
-        $this->assertEquals('foo523', Validator::validateType('foo523'));
-        $this->assertEquals('_test[]', Validator::validateType('arrayOf_test'));
-        $this->assertEquals('Test[]', Validator::validateType('arrayOfTest'));
-        $this->assertEquals('test[]', Validator::validateType('test[]'));
-        $this->assertEquals('_xsd_int[]', Validator::validateType('ArrayOf_xsd_int'));
+        $this->assertEquals('foo', WSDLGenerator_Validator::validateType('foo'));
+        $this->assertEquals('foobar', WSDLGenerator_Validator::validateType('foo-bar'));
+        $this->assertEquals('Foo', WSDLGenerator_Validator::validateType('Foo'));
+        $this->assertEquals('foo523', WSDLGenerator_Validator::validateType('foo523'));
+        $this->assertEquals('_test[]', WSDLGenerator_Validator::validateType('arrayOf_test'));
+        $this->assertEquals('Test[]', WSDLGenerator_Validator::validateType('arrayOfTest'));
+        $this->assertEquals('test[]', WSDLGenerator_Validator::validateType('test[]'));
+        $this->assertEquals('_xsd_int[]', WSDLGenerator_Validator::validateType('ArrayOf_xsd_int'));
 
-        $this->assertEquals('int', Validator::validateType('nonNegativeInteger'));
-        $this->assertEquals('float', Validator::validateType('float'));
-        $this->assertEquals('string', Validator::validateType('normalizedString'));
-        $this->assertEquals('Foo[]', Validator::validateType('ArrayOfFoo'));
-        $this->assertEquals('Foo[]', Validator::validateType('Foo[]'));
+        $this->assertEquals('int', WSDLGenerator_Validator::validateType('nonNegativeInteger'));
+        $this->assertEquals('float', WSDLGenerator_Validator::validateType('float'));
+        $this->assertEquals('string', WSDLGenerator_Validator::validateType('normalizedString'));
+        $this->assertEquals('Foo[]', WSDLGenerator_Validator::validateType('ArrayOfFoo'));
+        $this->assertEquals('Foo[]', WSDLGenerator_Validator::validateType('Foo[]'));
 
         $this->setExpectedException('ValidationException');
-        $this->assertEquals('and', Validator::validateType('and')); // and is reserved keyword
+        $this->assertEquals('and', WSDLGenerator_Validator::validateType('and')); // and is reserved keyword
     }
 
     /**
@@ -98,12 +98,12 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
      */
     public function testValidateNamingConvention()
     {
-        $this->assertEquals('foo', Validator::validateNamingConvention('foo'));
-        $this->assertEquals('foobar', Validator::validateNamingConvention('foo-bar'));
-        $this->assertEquals('Foo', Validator::validateNamingConvention('Foo'));
-        $this->assertEquals('foo523', Validator::validateNamingConvention('foo523'));
-        $this->assertEquals('a123foo', Validator::validateNamingConvention('123foo'));
-        $this->assertEquals('a123foo123', Validator::validateNamingConvention('123foo$123'));
-        $this->assertEquals('a123foo', Validator::validateNamingConvention('123f|o|o'));
+        $this->assertEquals('foo', WSDLGenerator_Validator::validateNamingConvention('foo'));
+        $this->assertEquals('foobar', WSDLGenerator_Validator::validateNamingConvention('foo-bar'));
+        $this->assertEquals('Foo', WSDLGenerator_Validator::validateNamingConvention('Foo'));
+        $this->assertEquals('foo523', WSDLGenerator_Validator::validateNamingConvention('foo523'));
+        $this->assertEquals('a123foo', WSDLGenerator_Validator::validateNamingConvention('123foo'));
+        $this->assertEquals('a123foo123', WSDLGenerator_Validator::validateNamingConvention('123foo$123'));
+        $this->assertEquals('a123foo', WSDLGenerator_Validator::validateNamingConvention('123f|o|o'));
     }
 }

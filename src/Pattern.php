@@ -15,7 +15,7 @@ require_once dirname(__FILE__) . '/Type.php';
  * @author Fredrik Wallgren <fredrik.wallgren@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
-class Pattern extends Type
+class WSDLGenerator_Pattern extends WSDLGenerator_Type
 {
     /**
      *

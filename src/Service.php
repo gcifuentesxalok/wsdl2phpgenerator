@@ -26,7 +26,7 @@ require_once dirname(__FILE__) . '/Operation.php';
  * @author Fredrik Wallgren <fredrik.wallgren@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
-class Service
+class WSDLGenerator_Service
 {
     /**
      *
@@ -42,7 +42,7 @@ class Service
 
     /**
      *
-     * @var Operation[] An array containing the operations of the service
+     * @var WSDLGenerator_Operation[] An array containing the operations of the service
      */
     private $operations;
 
@@ -89,15 +89,15 @@ class Service
      */
     public function generateClass()
     {
-        $config = Generator::getInstance()->getConfig();
+        $config = WSDLGenerator_Generator::getInstance()->getConfig();
 
         // Add prefix and suffix
         $name = $config->getPrefix() . $this->identifier . $config->getSuffix();
 
         // Generate a valid classname
         try {
-            $name = Validator::validateClass($name);
-        } catch (ValidationException $e) {
+            $name = WSDLGenerator_Validator::validateClass($name);
+        } catch (WSDLGenerator_ValidationException $e) {
             $name .= 'Custom';
         }
 
@@ -135,7 +135,7 @@ class Service
 
         $init = 'array(' . PHP_EOL;
         foreach ($this->types as $type) {
-            if ($type instanceof ComplexType) {
+            if ($type instanceof WSDLGenerator_ComplexType) {
                 $init .= "  '" . $type->getIdentifier() . "' => '\\" . $config->getNamespaceName() . "\\" . $type->getPhpIdentifier() . "'," . PHP_EOL;
             }
         }
@@ -148,7 +148,7 @@ class Service
 
         // Add all methods
         foreach ($this->operations as $operation) {
-            $name = Validator::validateNamingConvention($operation->getName());
+            $name = WSDLGenerator_Validator::validateNamingConvention($operation->getName());
 
             $comment = new PhpDocComment($operation->getDescription());
             $comment->setAccess(PhpDocElementFactory::getPublicAccess());
@@ -181,16 +181,16 @@ class Service
      */
     public function addOperation($name, $params, $description, $returns)
     {
-        $this->operations[] = new Operation($name, $params, $description, $returns);
+        $this->operations[] = new WSDLGenerator_Operation($name, $params, $description, $returns);
     }
 
     /**
      *
-     * @param Config $config The config containing the values to use
+     * @param WSDLGenerator_Config $config The config containing the values to use
      *
      * @return string Returns the string for the options array
      */
-    private function generateServiceOptions(Config $config)
+    private function generateServiceOptions(WSDLGenerator_Config $config)
     {
         $ret = '';
 

@@ -16,20 +16,20 @@ abstract class Wsdl2PhpGeneratorFunctionalTestCase extends PHPUnit_Framework_Tes
     protected $outputDir;
 
     /**
-     * @var Generator The generator which will execute the code generation.
+     * @var WSDLGenerator_Generator The generator which will execute the code generation.
      */
 
     protected $generator;
     /**
-     * @var Config The configuration for the code generation.
+     * @var WSDLGenerator_Config The configuration for the code generation.
      */
     protected $config;
 
     protected function setup()
     {
         $this->outputDir = __DIR__ . '/' . get_class($this) . 'Code';
-        $this->generator = Generator::getInstance();
-        $this->config = new Config($this->wsdl, $this->outputDir);
+        $this->generator = WSDLGenerator_Generator::getInstance();
+        $this->config = new WSDLGenerator_Config($this->wsdl, $this->outputDir);
 
         // We do not execute the code generation here to allow individual test cases
         // to update the configuration further before generating.

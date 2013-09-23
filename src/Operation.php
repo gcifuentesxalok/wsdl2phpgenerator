@@ -10,7 +10,7 @@
  * @author Fredrik Wallgren <fredrik.wallgren@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
-class Operation
+class WSDLGenerator_Operation
 {
     /**
      *
@@ -98,7 +98,7 @@ class Operation
                 $ret .= $typeHint . ' ';
             } else {
                 foreach ($validTypes as $type) {
-                    if ($type instanceof ComplexType) {
+                    if ($type instanceof WSDLGenerator_ComplexType) {
                         if ($typeHint == $type->getPhpIdentifier()) {
                             $ret .= $typeHint . ' ';
                             break;
@@ -140,13 +140,13 @@ class Operation
 
         foreach ($validTypes as $type) {
             if ($paramType == $type->getIdentifier()) {
-                if ($type instanceof Pattern) {
+                if ($type instanceof WSDLGenerator_Pattern) {
                     $ret['type'] = $type->getDatatype();
                     $ret['desc'] = _('Restriction pattern: ') . $type->getValue();
                 } else {
                     $ret['type'] = $type->getPhpIdentifier();
 
-                    if ($type instanceof Enum) {
+                    if ($type instanceof WSDLGenerator_Enum) {
                         $ret['desc'] = _('Constant: ') . $type->getDatatype() . ' - ' . _('Valid values: ') . $type->getValidValues();
                     }
                 }

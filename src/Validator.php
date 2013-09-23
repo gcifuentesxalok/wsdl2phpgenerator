@@ -16,7 +16,7 @@ require_once dirname(__FILE__) . '/ValidationException.php';
  * @author Fredrik Wallgren <fredrik.wallgren@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
-class Validator
+class WSDLGenerator_Validator
 {
     /**
      *
@@ -165,11 +165,11 @@ class Validator
         $validClassName = self::validateNamingConvention($className);
 
         if (class_exists($validClassName)) {
-            throw new ValidationException("Class " . $validClassName . " already defined. Cannot redefine class with class loaded.");
+            throw new WSDLGenerator_ValidationException("Class " . $validClassName . " already defined. Cannot redefine class with class loaded.");
         }
 
         if (self::isKeyword($validClassName)) {
-            throw new ValidationException($validClassName . ' is a restricted keyword.');
+            throw new WSDLGenerator_ValidationException($validClassName . ' is a restricted keyword.');
         }
 
         return $validClassName;
@@ -227,7 +227,7 @@ class Validator
         }
 
         if (self::isKeyword($validType)) {
-            throw new ValidationException($validType . ' is a restricted keyword.');
+            throw new WSDLGenerator_ValidationException($validType . ' is a restricted keyword.');
         }
 
         return $validType;

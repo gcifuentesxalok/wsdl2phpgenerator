@@ -10,7 +10,7 @@
  * @author Fredrik Wallgren <fredrik.wallgren@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
-class Config
+class WSDLGenerator_Config
 {
     /**
      *
